@@ -2,7 +2,9 @@ from numpy.core.fromnumeric import repeat
 import numpy as np 
 import requests
 
-repeat = 4
+repeat = 444
+test_number = 995
+
 
 def test_lottonumber_load(number):
     lotto_numbers = []
@@ -66,15 +68,18 @@ target = np.array(data[repeat//2:])
 from tensorflow.keras.layers import LSTM
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-model = Sequential()
-model.add(Dense(128,input_shape=(train.shape)))    #LSTM need timesteps
-model.add(Dense(47))
-model.compile(loss='mean_squared_error',optimizer='adam')
-model.fit(train,target,epochs=10,batch_size=30)
+from tensorflow.keras.models import load_model
+# model = Sequential()
+# model.add(Dense(777,input_shape=(train.shape)))    #LSTM need timesteps
+# model.add(Dense(47))
+# model.compile(loss='mean_squared_error',optimizer='adam')
+# model.fit(train,target,epochs=77,batch_size=77)
 
-test = onehot(test_lottonumber_load(5))
+# model.save('lotto.h5')
+model = load_model('lotto.h5')
+test = onehot(test_lottonumber_load(test_number))
 test = np.array(test)
 predict=model.predict(test)
 print(find_number(predict))
 
-print('\nanswer',test_lottonumber_load(5))
+#print('\nanswer:',test_lottonumber_load(test_number+1)[0])
