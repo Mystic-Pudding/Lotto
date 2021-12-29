@@ -41,13 +41,18 @@ def onehotdecode(onehotlist):
         a = np.where(1==onehotlist[i])[0]
         find_list.append(a)
     return find_list
-    
+
 def find_number(numbers):
     find_numbers = []
     numbers = list(numbers[0])
     for i in range(6):
         tmp = max(numbers)
         index = numbers.index(tmp)
+        if(index==0):
+            numbers[index] = -99
+            a = numbers.index(max(numbers))
+            find_numbers.append(a)
+            continue
         numbers[index] = -99
         find_numbers.append(index)
     find_numbers.sort()
@@ -65,7 +70,7 @@ model = Sequential()
 model.add(Dense(128,input_shape=(train.shape)))    #LSTM need timesteps
 model.add(Dense(47))
 model.compile(loss='mean_squared_error',optimizer='adam')
-model.fit(train,target,epochs=1,batch_size=30)
+model.fit(train,target,epochs=10,batch_size=30)
 
 test = onehot(test_lottonumber_load(5))
 test = np.array(test)
