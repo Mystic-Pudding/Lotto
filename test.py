@@ -2,6 +2,21 @@ from tensorflow.keras.models import load_model
 from flask import Flask, jsonify
 import numpy as np
 import requests
+def find_number(numbers):
+    find_numbers = []
+    numbers = list(numbers[0])
+    for i in range(6):
+        tmp = max(numbers)
+        index = numbers.index(tmp)
+        if(index==0):
+            numbers[index] = -99
+            a = numbers.index(max(numbers))
+            find_numbers.append(a)
+            continue
+        numbers[index] = -99
+        find_numbers.append(index)
+    find_numbers.sort()
+    return find_numbers
 def onehot(number):
     returnarray = []
     for i in range(len(number)):
@@ -24,12 +39,15 @@ def test_lottonumber_load(number):
     return lotto_numbers 
 
 model = load_model("lotto.h5")
+test = onehot(test_lottonumber_load(995))
+test = np.array(test)
+predict=model.predict(test)
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return str(test_lottonumber_load(100))
+    return jsonify(numbers=find_number(predict))
 
 if __name__ == '__main__':
     app.run(debug=True)
