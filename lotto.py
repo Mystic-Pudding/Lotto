@@ -60,14 +60,14 @@ def find_number(numbers):
     find_numbers.sort()
     return find_numbers
 
-data = lottonumber_load(repeat)
-data = onehot(data)
-train = np.array(data[:repeat//2])
-target = np.array(data[repeat//2:])
+# data = lottonumber_load(repeat)
+# data = onehot(data)
+# train = np.array(data[:repeat//2])
+# target = np.array(data[repeat//2:])
 
-from tensorflow.keras.layers import LSTM
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+# from tensorflow.keras.layers import LSTM
+# from tensorflow.keras.models import Sequential
+# from tensorflow.keras.layers import Dense
 from tensorflow.keras.models import load_model
 # model = Sequential()
 # model.add(Dense(777,input_shape=(train.shape)))    #LSTM need timesteps
@@ -80,6 +80,14 @@ model = load_model('lotto.h5')
 test = onehot(test_lottonumber_load(test_number))
 test = np.array(test)
 predict=model.predict(test)
-print(find_number(predict))
 
 #print('\nanswer:',test_lottonumber_load(test_number+1)[0])
+from flask import Flask, json, jsonify
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return jsonify(numbers=find_number(predict))
+
+if __name__ == '__main__':
+    app.run(debug=True)
