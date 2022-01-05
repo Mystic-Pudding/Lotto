@@ -1,1 +1,1 @@
-worker: python lotto.py
+web: gunicorn lotto:app

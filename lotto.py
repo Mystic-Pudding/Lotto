@@ -1,4 +1,3 @@
-from numpy.core.fromnumeric import repeat
 import numpy as np 
 import requests
 
