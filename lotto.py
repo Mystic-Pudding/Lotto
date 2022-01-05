@@ -86,7 +86,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return jsonify(numbers=find_number(predict))
+    return "hello"
 
 if __name__ == '__main__':
     app.run(debug=True)
