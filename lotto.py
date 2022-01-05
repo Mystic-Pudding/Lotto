@@ -78,7 +78,7 @@ from tensorflow.keras.models import load_model
 model = load_model('lotto.h5')
 test = onehot(test_lottonumber_load(test_number))
 test = np.array(test)
-# test_result=model.predict(test)
+test_result=model.predict(test)
 
 #print('\nanswer:',test_lottonumber_load(test_number+1)[0])
 from flask import Flask, jsonify
@@ -86,7 +86,7 @@ app = Flask(__name__)
 print(test[0])
 @app.route('/')
 def hello_world():
-    return jsonify(number=find_number(test))
+    return jsonify(number=find_number(test_result))
 
 if __name__ == '__main__':
     app.run(debug=True)
