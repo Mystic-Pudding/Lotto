@@ -1,5 +1,5 @@
 numpy
 requests
-tensorflow-cpu
-flask
+tensorflow
 gunicorn
+flask

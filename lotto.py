@@ -81,7 +81,7 @@ test = np.array(test)
 predict=model.predict(test)
 
 #print('\nanswer:',test_lottonumber_load(test_number+1)[0])
-from flask import Flask, json, jsonify
+from flask import Flask, jsonify
 app = Flask(__name__)
 
 @app.route('/')
