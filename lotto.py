@@ -2,7 +2,6 @@ import numpy as np
 import requests
 
 repeat = 444
-test_number = 995
 
 
 def test_lottonumber_load(number):
@@ -76,16 +75,17 @@ from tensorflow.keras.models import load_model
 
 # model.save('lotto.h5')
 model = load_model('lotto.h5')
-test = onehot(test_lottonumber_load(test_number))
-test = np.array(test)
-test_result=model.predict(test)
 
 #print('\nanswer:',test_lottonumber_load(test_number+1)[0])
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 app = Flask(__name__)
-print(test[0])
 @app.route('/')
 def hello_world():
+    test_number = request.args.get('number','100')
+    test_number = int(test_number)
+    test = onehot(test_lottonumber_load(test_number))
+    test = np.array(test)
+    test_result=model.predict(test)
     return jsonify(number=find_number(test_result))
 
 if __name__ == '__main__':
